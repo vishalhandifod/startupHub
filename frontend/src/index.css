@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --bg: 10 15 30;
+    --bg-elevated: 17 24 39;
+    --bg-muted: 15 23 42;
+    --surface: 255 255 255;
+    --text: 226 232 240;
+    --text-soft: 148 163 184;
+    --line: 31 41 55;
+    --accent: 99 102 241;
+    --success: 16 185 129;
+    --danger: 244 63 94;
+  }
+
+  .light {
+    color-scheme: light;
+    --bg: 248 250 255;
+    --bg-elevated: 255 255 255;
+    --bg-muted: 241 245 249;
+    --surface: 15 23 42;
+    --text: 15 23 42;
+    --text-soft: 71 85 105;
+    --line: 226 232 240;
+    --accent: 79 70 229;
+    --success: 5 150 105;
+    --danger: 225 29 72;
+  }
+
+  * {
+    border-color: rgb(var(--line));
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply min-h-screen bg-[rgb(var(--bg))] font-sans text-[rgb(var(--text))] antialiased;
+    background-image:
+      radial-gradient(circle at top left, rgba(99, 102, 241, 0.18), transparent 28%),
+      radial-gradient(circle at top right, rgba(16, 185, 129, 0.14), transparent 24%);
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    @apply font-sans;
+  }
+
+  ::selection {
+    @apply bg-primary/30 text-white;
+  }
+
+  #root {
+    @apply min-h-screen;
+  }
+}
+
+@layer components {
+  .app-shell {
+    @apply min-h-screen bg-transparent;
+  }
+
+  .glass-panel {
+    @apply rounded-3xl border border-white/10 bg-white/5 shadow-glow backdrop-blur-xl transition duration-300 dark:border-white/10 dark:bg-white/5;
+  }
+
+  .light .glass-panel {
+    @apply border-slate-200/80 bg-white/80;
+  }
+
+  .surface-card {
+    @apply rounded-3xl border border-white/10 bg-[rgb(var(--bg-elevated))]/90 shadow-soft backdrop-blur-xl transition duration-300 hover:-translate-y-0.5 hover:shadow-glow;
+  }
+
+  .light .surface-card {
+    @apply border-slate-200/80 bg-white/90;
+  }
+
+  .input-base {
+    @apply w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-[rgb(var(--text))] outline-none transition placeholder:text-[rgb(var(--text-soft))] focus:border-primary focus:ring-2 focus:ring-primary/20;
+  }
+
+  .light .input-base {
+    @apply border-slate-200 bg-slate-50;
+  }
+
+  .page-title {
+    @apply font-display text-3xl font-extrabold tracking-tight md:text-4xl;
+  }
+
+  .subtle-text {
+    @apply text-sm text-[rgb(var(--text-soft))];
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

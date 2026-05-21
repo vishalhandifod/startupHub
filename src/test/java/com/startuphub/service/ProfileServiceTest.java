@@ -36,6 +36,9 @@ class ProfileServiceTest {
     @Mock
     private AuthService authService;
 
+    @Mock
+    private NotificationService notificationService;
+
     @InjectMocks
     private ProfileService profileService;
 
@@ -73,6 +76,7 @@ class ProfileServiceTest {
 
         assertThat(response.id()).isEqualTo(2L);
         assertThat(response.followedByCurrentUser()).isTrue();
+        verify(notificationService).createFollowNotification(currentUser, targetUser);
     }
 
     @Test

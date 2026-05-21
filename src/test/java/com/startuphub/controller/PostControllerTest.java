@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.startuphub.config.SecurityConfig;
+import com.startuphub.config.WebProperties;
 import com.startuphub.dto.AuthorSummaryResponse;
 import com.startuphub.dto.CommentResponse;
 import com.startuphub.dto.CreateCommentRequest;
@@ -46,6 +47,9 @@ class PostControllerTest {
 
     @MockBean
     private JwtTokenProvider jwtTokenProvider;
+
+    @MockBean
+    private WebProperties webProperties;
 
     @Test
     @WithMockUser(username = "alice@example.com", roles = "USER")

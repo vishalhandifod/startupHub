@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startup Detail</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<div class="app-shell">
+    <div class="shell-frame">
+        <header class="topbar">
+            <div class="brand-mark"><div class="pulse"></div><span>StartupHub</span></div>
+            <nav class="nav-links">
+                <a href="/app/feed">Feed</a>
+                <a href="/app/discovery">Discovery</a>
+                <a href="/app/profile">Profile</a>
+                <a class="active" href="/app/startups">Startups</a>
+                <a href="/app/notifications">Notifications</a>
+                <a href="/app/messages">Messages</a>
+            </nav>
+        </header>
+        <main id="startup-detail-root" class="content-stack" th:attr="data-startup-id=${startupId}">
+            <section class="hero-card startup-banner">
+                <div class="eyebrow">Startup profile</div>
+                <h1 class="headline" id="startup-name">Startup</h1>
+                <p class="subcopy" id="startup-description"></p>
+                <div class="inline-actions">
+                    <span class="muted" id="startup-slug"></span>
+                    <span class="muted" id="startup-meta"></span>
+                    <span class="muted" id="startup-followers"></span>
+                </div>
+                <div class="hero-actions">
+                    <button id="follow-startup-btn" class="primary-btn">Follow startup</button>
+                </div>
+                <div class="media-preview" style="display:block;"><img id="startup-logo" alt="Startup logo"></div>
+            </section>
+            <section class="surface-card">
+                <div class="eyebrow">Owner controls</div>
+                <h3>Edit startup page</h3>
+                <form id="startup-edit-form" class="stack">
+                    <div class="field"><label for="startup-detail-name-input">Name</label><input id="startup-detail-name-input" type="text"></div>
+                    <div class="field"><label for="startup-detail-description-input">Description</label><textarea id="startup-detail-description-input"></textarea></div>
+                    <div class="field"><label for="startup-detail-website-input">Website</label><input id="startup-detail-website-input" type="url"></div>
+                    <div class="field"><label for="startup-detail-industry-input">Industry</label><input id="startup-detail-industry-input" type="text"></div>
+                    <div class="field"><label for="startup-detail-location-input">Location</label><input id="startup-detail-location-input" type="text"></div>
+                    <div class="field"><label for="startup-detail-logo-input">New logo</label><input id="startup-detail-logo-input" type="file" accept="image/*"></div>
+                    <button type="submit" class="secondary-btn">Save startup</button>
+                </form>
+                <div id="startup-status" class="status"></div>
+            </section>
+        </main>
+    </div>
+</div>
+<script src="/js/startups.js"></script>
+</body>
+</html>

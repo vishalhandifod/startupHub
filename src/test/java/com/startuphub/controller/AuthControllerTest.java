@@ -6,10 +6,12 @@ import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.startuphub.config.SecurityConfig;
+import com.startuphub.config.WebProperties;
 import com.startuphub.dto.AuthResponse;
 import com.startuphub.dto.RegisterRequest;
 import com.startuphub.dto.UserResponse;
@@ -42,6 +44,9 @@ class AuthControllerTest {
     @MockBean
     private JwtTokenProvider jwtTokenProvider;
 
+    @MockBean
+    private WebProperties webProperties;
+
     @Test
     void meEndpointRequiresAuthentication() throws Exception {
         mockMvc.perform(get("/api/auth/me"))
@@ -65,6 +70,7 @@ class AuthControllerTest {
                     {"name":"Alice","email":"alice@example.com","password":"password123"}
                     """))
             .andExpect(status().isCreated())
+            .andExpect(header().string("Set-Cookie", org.hamcrest.Matchers.containsString("startuphub_auth=jwt-token")))
             .andExpect(jsonPath("$.token").value("jwt-token"))
             .andExpect(jsonPath("$.user.email").value("alice@example.com"));
     }

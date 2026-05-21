@@ -32,15 +32,56 @@
 
 ## Phase 3 - Profile Module
 
-- [ ] In progress: write Phase 3 profile module spec and implementation plan
-- [ ] TODO: create profile update endpoints
-- [ ] TODO: support bio and profile photo updates
-- [ ] TODO: add public profile view
-- [ ] TODO: add follower/following relationships
+- [x] DONE: write Phase 3 profile module spec and implementation plan
+- [x] DONE: create profile update endpoints
+- [x] DONE: support bio and profile photo updates
+- [x] DONE: add public profile view
+- [x] DONE: add follower/following relationships
+- [x] DONE: verify live MySQL-backed profile update and follow graph flow with curl
 
 ## Phase 4 - Discovery and Social Features
 
-- [ ] TODO: search users and startups
-- [ ] TODO: suggested connections
-- [ ] TODO: notifications baseline
-- [ ] TODO: activity feed improvements
+- [x] DONE: write Phase 4 discovery module spec and implementation plan
+- [x] DONE: search users by name and email
+- [x] DONE: suggested connections
+- [x] DONE: notifications baseline
+- [x] DONE: personalized discovery feed improvements
+- [x] DONE: verify automated discovery, notification, and controller coverage
+
+## Phase 5 - Next TODO
+
+- [x] DONE: startup/company pages separate from user profiles
+- [ ] TODO: direct messaging or inbox
+- [ ] TODO: post media upload handling
+- [ ] TODO: frontend UI with Bootstrap 5
+
+## Phase 6 - Frontend Web App
+
+- [x] DONE: multi-page frontend UI with Bootstrap 5
+- [x] DONE: HttpOnly cookie-based browser auth
+- [x] DONE: media upload support for posts, profiles, and startups
+- [x] DONE: responsive feed, discovery, profile, startup, and notification pages
+
+## Remaining Major TODO
+
+- [x] DONE: direct messaging or inbox
+
+## Phase 8 - React SPA Frontend
+
+- [x] DONE: bootstrap `frontend/` with React 18, Vite, React Router v6, Axios, Lucide, and Tailwind CSS
+- [x] DONE: configure global theme tokens, dark mode, typography, and responsive layout system
+- [x] DONE: build `AuthContext`, `NotificationContext`, toast system, and protected routing
+- [x] DONE: build Login page
+- [x] DONE: build Register page
+- [x] DONE: build Feed page
+- [x] DONE: build Discover page
+- [x] DONE: build Profile page
+- [x] DONE: build Startups page
+- [x] DONE: build Startup detail page
+- [x] DONE: build Messages page
+- [x] DONE: build Notifications page
+- [x] DONE: build Create Post modal, skeleton loaders, and mobile navigation
+- [x] DONE: verify production frontend build with `npm run build`
+- [x] DONE: remove remaining placeholder data and replace with real API states plus empty-state UI
+- [x] DONE: fix page alignment, typography, loading states, and avatar fallback behavior
+- [x] DONE: add WebSocket-backed real-time messaging and notification subscriptions

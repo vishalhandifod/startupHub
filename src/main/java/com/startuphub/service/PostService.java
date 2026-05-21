@@ -25,6 +25,7 @@ public class PostService {
     private final CommentRepository commentRepository;
     private final PostLikeRepository postLikeRepository;
     private final AuthService authService;
+    private final NotificationService notificationService;
 
     public PostResponse createPost(CreatePostRequest request) {
         User currentUser = authService.getCurrentAuthenticatedUser();
@@ -57,6 +58,7 @@ public class PostService {
                 .post(post)
                 .user(currentUser)
                 .build());
+            notificationService.createPostLikeNotification(currentUser, post.getAuthor(), post);
         }
         return mapToPostResponse(post, currentUser);
     }
@@ -77,6 +79,7 @@ public class PostService {
             .post(post)
             .author(currentUser)
             .build());
+        notificationService.createPostCommentNotification(currentUser, post.getAuthor(), post);
         return mapToCommentResponse(comment);
     }
 

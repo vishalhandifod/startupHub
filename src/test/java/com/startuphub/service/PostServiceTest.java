@@ -42,6 +42,9 @@ class PostServiceTest {
     @Mock
     private AuthService authService;
 
+    @Mock
+    private NotificationService notificationService;
+
     @InjectMocks
     private PostService postService;
 
@@ -86,6 +89,24 @@ class PostServiceTest {
     }
 
     @Test
+    void likePostCreatesNotificationWhenLikeIsNew() {
+        User actor = user(1L, "Alice");
+        User owner = user(2L, "Bob");
+        Post post = post(10L, "Update", owner, LocalDateTime.of(2026, 5, 20, 14, 0));
+
+        when(authService.getCurrentAuthenticatedUser()).thenReturn(actor);
+        when(postRepository.findById(10L)).thenReturn(Optional.of(post));
+        when(postLikeRepository.existsByPostIdAndUserId(10L, 1L)).thenReturn(false, true);
+        when(postLikeRepository.countByPostId(10L)).thenReturn(1L);
+        when(commentRepository.countByPostId(10L)).thenReturn(0L);
+
+        PostResponse response = postService.likePost(10L);
+
+        assertThat(response.likedByCurrentUser()).isTrue();
+        verify(notificationService).createPostLikeNotification(actor, owner, post);
+    }
+
+    @Test
     void addCommentCreatesCommentForCurrentUser() {
         User user = user(1L, "Alice");
         Post post = post(10L, "Update", user, LocalDateTime.of(2026, 5, 20, 14, 0));
@@ -107,6 +128,30 @@ class PostServiceTest {
         assertThat(response.postId()).isEqualTo(10L);
         assertThat(response.author().email()).isEqualTo("alice@example.com");
         assertThat(response.content()).isEqualTo("Looks good");
+    }
+
+    @Test
+    void addCommentCreatesNotificationForPostOwner() {
+        User actor = user(1L, "Alice");
+        User owner = user(2L, "Bob");
+        Post post = post(10L, "Update", owner, LocalDateTime.of(2026, 5, 20, 14, 0));
+
+        when(authService.getCurrentAuthenticatedUser()).thenReturn(actor);
+        when(postRepository.findById(10L)).thenReturn(Optional.of(post));
+        when(commentRepository.save(any(Comment.class))).thenAnswer(invocation -> {
+            Comment comment = invocation.getArgument(0);
+            comment.setId(99L);
+            comment.setCreatedAt(LocalDateTime.of(2026, 5, 20, 15, 5));
+            return comment;
+        });
+
+        CommentResponse response = postService.addComment(
+            10L,
+            new CreateCommentRequest("Looks good")
+        );
+
+        assertThat(response.postId()).isEqualTo(10L);
+        verify(notificationService).createPostCommentNotification(actor, owner, post);
     }
 
     @Test

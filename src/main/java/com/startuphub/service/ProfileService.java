@@ -19,6 +19,7 @@ public class ProfileService {
     private final UserRepository userRepository;
     private final UserFollowRepository userFollowRepository;
     private final AuthService authService;
+    private final NotificationService notificationService;
 
     public ProfileResponse getMyProfile() {
         User currentUser = authService.getCurrentAuthenticatedUser();
@@ -64,6 +65,7 @@ public class ProfileService {
                 .follower(currentUser)
                 .following(targetUser)
                 .build());
+            notificationService.createFollowNotification(currentUser, targetUser);
         }
 
         return mapProfile(targetUser, currentUser);

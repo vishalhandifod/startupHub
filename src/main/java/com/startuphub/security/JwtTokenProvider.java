@@ -40,6 +40,17 @@ public class JwtTokenProvider {
         return extractAllClaims(token).getSubject();
     }
 
+    public Long extractUserId(String token) {
+        Object userId = extractAllClaims(token).get("userId");
+        if (userId instanceof Integer integerUserId) {
+            return integerUserId.longValue();
+        }
+        if (userId instanceof Long longUserId) {
+            return longUserId;
+        }
+        return Long.parseLong(String.valueOf(userId));
+    }
+
     public boolean isTokenValid(String token, UserDetails userDetails) {
         String username = extractUsername(token);
         return username.equals(userDetails.getUsername()) && !extractAllClaims(token).getExpiration().before(new Date());

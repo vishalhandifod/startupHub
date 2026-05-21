@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.startuphub.config.SecurityConfig;
+import com.startuphub.config.WebProperties;
 import com.startuphub.dto.ProfileResponse;
 import com.startuphub.dto.ProfileSummaryResponse;
 import com.startuphub.dto.UpdateProfileRequest;
@@ -44,6 +45,9 @@ class ProfileControllerTest {
 
     @MockBean
     private JwtTokenProvider jwtTokenProvider;
+
+    @MockBean
+    private WebProperties webProperties;
 
     @Test
     @WithMockUser(username = "alice@example.com", roles = "USER")
