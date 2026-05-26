@@ -30,7 +30,7 @@ public class PostService {
     public PostResponse createPost(CreatePostRequest request) {
         User currentUser = authService.getCurrentAuthenticatedUser();
         Post savedPost = postRepository.save(Post.builder()
-            .content(request.content())
+            .content(request.content().trim())
             .imageUrl(request.imageUrl())
             .author(currentUser)
             .build());

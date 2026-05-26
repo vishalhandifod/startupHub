@@ -1,4 +1,4 @@
-import { ImagePlus, Lock, Users } from 'lucide-react'
+import { ImagePlus, Lock, Trash2, Users } from 'lucide-react'
 import { useState } from 'react'
 import { createPost } from '../../api/posts'
 import { uploadPostImage } from '../../api/uploads'
@@ -48,7 +48,9 @@ export default function CreatePostModal({ isOpen, onClose }) {
 
   async function handleSubmit(event) {
     event.preventDefault()
-    if (!content.trim()) {
+    const trimmedContent = content.trim()
+
+    if (!trimmedContent) {
       setError('Write something meaningful before posting.')
       return
     }
@@ -56,7 +58,10 @@ export default function CreatePostModal({ isOpen, onClose }) {
     setSubmitting(true)
     setError('')
     try {
-      await createPost({ content, imageUrl })
+      await createPost({
+        content: trimmedContent,
+        imageUrl: imageUrl || null,
+      })
       window.dispatchEvent(new CustomEvent('startuphub:post-created'))
       showToast({
         title: 'Post shared',
@@ -75,33 +80,53 @@ export default function CreatePostModal({ isOpen, onClose }) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Create a founder update">
       <form onSubmit={handleSubmit} className="space-y-5">
-        <div className="rounded-3xl border border-dashed border-white/10 bg-white/5 p-5">
-          <label className="flex cursor-pointer flex-col items-center justify-center gap-3 text-center">
-            <div className="rounded-2xl bg-primary/15 p-4 text-primary">
-              <ImagePlus size={24} />
-            </div>
-            <div>
-              <p className="font-semibold">Drag an image in or click to upload</p>
-              <p className="mt-1 subtle-text">Product launch shots, event photos, or your latest build.</p>
-            </div>
-            <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
-          </label>
-          {uploading && <p className="mt-3 subtle-text">Uploading image...</p>}
-          {imageUrl && (
-            <img src={imageUrl} alt="Uploaded post" className="mt-4 w-full rounded-3xl border border-white/10 object-cover" />
-          )}
-        </div>
-
         <label className="block space-y-2 text-sm">
-          <span>Caption</span>
+          <span>Post content</span>
           <textarea
             className="input-base min-h-[160px]"
             placeholder="Share what your team shipped, learned, raised, or unlocked this week."
             value={content}
             onChange={(event) => setContent(event.target.value)}
+            required
           />
-          <p className="subtle-text">Tip: add hashtags like #launchday #saas #founderstory for discoverability.</p>
+          <p className="subtle-text">Text posts work on their own. Add an image only if it strengthens the update.</p>
         </label>
+
+        <div className="rounded-3xl border border-dashed border-white/10 bg-white/5 p-5">
+          <div className="flex items-start justify-between gap-4">
+            <label className="flex cursor-pointer flex-col items-start justify-center gap-3 text-left">
+              <div className="rounded-2xl bg-primary/15 p-4 text-primary">
+                <ImagePlus size={24} />
+              </div>
+              <div>
+                <p className="font-semibold">Optional image</p>
+                <p className="mt-1 subtle-text">Add a launch shot, screenshot, pitch visual, or team moment.</p>
+              </div>
+              <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+            </label>
+
+            {imageUrl ? (
+              <button
+                type="button"
+                onClick={() => setImageUrl('')}
+                className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-[rgb(var(--text-soft))] transition hover:bg-white/10 hover:text-[rgb(var(--text))]"
+              >
+                <Trash2 size={16} />
+                Remove
+              </button>
+            ) : null}
+          </div>
+
+          {uploading && <p className="mt-3 subtle-text">Uploading image...</p>}
+
+          {imageUrl && (
+            <img
+              src={imageUrl}
+              alt="Uploaded post"
+              className="mt-4 w-full rounded-3xl border border-white/10 object-cover"
+            />
+          )}
+        </div>
 
         <div className="grid gap-3 md:grid-cols-2">
           <button
