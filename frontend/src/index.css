@@ -5,6 +5,8 @@
 @layer base {
   :root {
     color-scheme: dark;
+    --font-sans: 'Inter', sans-serif;
+    --font-display: 'Manrope', sans-serif;
     --bg: 10 15 30;
     --bg-elevated: 17 24 39;
     --bg-muted: 15 23 42;
@@ -41,6 +43,7 @@
 
   body {
     @apply min-h-screen bg-[rgb(var(--bg))] font-sans text-[rgb(var(--text))] antialiased;
+    font-family: var(--font-sans);
     background-image:
       radial-gradient(circle at top left, rgba(99, 102, 241, 0.18), transparent 28%),
       radial-gradient(circle at top right, rgba(16, 185, 129, 0.14), transparent 24%);
@@ -51,6 +54,7 @@
   textarea,
   select {
     @apply font-sans;
+    font-family: var(--font-sans);
   }
 
   ::selection {
@@ -93,6 +97,7 @@
 
   .page-title {
     @apply font-display text-3xl font-extrabold tracking-tight md:text-4xl;
+    font-family: var(--font-display);
   }
 
   .subtle-text {

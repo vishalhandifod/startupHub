@@ -5,12 +5,12 @@ export function getStoredTheme() {
 }
 
 export function applyTheme(theme) {
-  document.documentElement.classList.toggle('light', theme === 'light')
+  document.documentElement.classList.toggle('dark', theme === 'dark')
   localStorage.setItem(STORAGE_KEY, theme)
 }
 
-export function toggleTheme(currentTheme) {
-  const nextTheme = currentTheme === 'dark' ? 'light' : 'dark'
-  applyTheme(nextTheme)
-  return nextTheme
-}
+// export function toggleTheme(currentTheme) {
+//   const nextTheme = currentTheme === 'dark' ? 'light' : 'dark'
+//   applyTheme(nextTheme)
+//   return nextTheme
+// }

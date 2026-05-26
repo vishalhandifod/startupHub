@@ -247,7 +247,11 @@ export default function MessagesPage() {
 
     setSending(true)
     setMessageText('')
-    appendOptimisticMessage(content)
+    const optimistic = appendOptimisticMessage(content)
+    if (!optimistic) {
+      setSending(false)
+      return
+    }
 
     try {
       sendMessage({

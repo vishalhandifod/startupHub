@@ -57,6 +57,7 @@ export default function CreatePostModal({ isOpen, onClose }) {
     setError('')
     try {
       await createPost({ content, imageUrl })
+      window.dispatchEvent(new CustomEvent('startuphub:post-created'))
       showToast({
         title: 'Post shared',
         message: audience === 'public' ? 'Your update is live on the founder feed.' : 'Your update has been shared.',
